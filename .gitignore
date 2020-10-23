@@ -1,0 +1,16 @@
+# Vscode config
+.vscode/
+
+# NPM modules
+node_modules/
+
+# Parcel cache
+.cache/
+
+# Development environment
+dist/
+build/
+
+# Logs
+logs/
+*.log
