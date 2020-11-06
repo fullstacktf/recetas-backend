@@ -1,4 +1,4 @@
-# Proyecto Instagram de Recetas: Frontend
+# Proyecto Instagram de Recetas: Backend
 
 ---
 
