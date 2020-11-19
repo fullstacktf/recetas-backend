@@ -17,3 +17,6 @@ logs/
 
 #MacOS
 .DS_Store
+
+#DB
+mongo-data/
