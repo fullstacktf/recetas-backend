@@ -12,49 +12,48 @@
 
 ### LOGIN:
 
-    POST    api/v1/login
-    PUT     api/v1/resetPassword/{userID}
+    POST    api/v1/users/login
+    PUT     api/v1/users/password/reset
 
 ### REGISTER:
 
-    POST	api/v1/register
+    POST	api/v1/users/register
 
 ### HOME:
 
-    GET     api/v1/publicPost
+    GET     api/v1/posts/public/popular
 
 ### TIMELINE:
 
-    GET     api/v1/timeline/{userID}
+    GET     api/v1/users/{userID}/timeline
 
 ### RECETA-COMPLETA/PREVIEW:
 
-    GET		api/v1/post/{PostID}
-    POST	api/v1/likePost/{postID}
-    DELETE	api/v1/likePost/{postID}
-    POST	api/v1/comment/{postID}
-    PUT		api/v1/comment/{commentID}
-    DELETE	api/v1/comment/{commentID}
-    POST	api/v1/savePost/{postID}
-    DELETE	api/v1/savePost/{postID}
-    GET		api/v1/postByTag/{tagID}
-    POST	api/v1/likeComment/{commentID}
-    DELETE	api/v1/likeComment/{commentID}
+    GET		api/v1/posts/{PostID}
+    POST	api/v1/posts/{postID}/like
+    DELETE	api/v1/posts/{postID}/like
+    POST	api/v1/posts/{postID}/comment
+    PUT		api/v1/posts/{postID}/comment
+    DELETE	api/v1/posts/{postID}/comment
+    POST	api/v1/posts/{postID}/save
+    DELETE	api/v1/posts/{postID}/save
+    GET		api/v1/posts/tag/{tagID}
+    POST	api/v1/comments/{commentID}/like
+    DELETE	api/v1/comments/{commentID}/like
 
 ### PROFILE:
 
-    GET		api/v1/savedPosts/{userID}
-    POST	api/v1/follow
-    DELETE	api/v1/follow
-    GET		api/v1/profile/{userID}
-    PUT		api/v1/profile/{userID}
-    POST	api/v1/post
-    PUT		api/v1/post
-    DELETE	api/v1/post
+    GET		api/v1/posts/{postID}/save
+    POST	api/v1/follow/{userID}
+    DELETE	api/v1/follow/{userID}
+    GET		api/v1/users/{userID}/profile
+    PUT		api/v1/users/{userID}/profile
+    POST	api/v1/posts
+    PUT		api/v1/posts/{postID}
+    DELETE	api/v1/posts/{postID}
 
 ## Authors
 
 [Imar Abreu Díaz](https://github.com/izm20)  
-[Francisco Javier Mendoza Álvarez](https://github.com/PanchoMen)  
-[Miqueas García González](https://github.com/Sozhia)  
+[Francisco Javier Mendoza Álvarez](https://github.com/PanchoMen)
 [Daniel Rodríguez Suárez](https://github.com/Danielmagox)
