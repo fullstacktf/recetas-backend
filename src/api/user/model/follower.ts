@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { Document, model, Model, Schema } from 'mongoose';
-interface FollowerModel extends Document {
+
+export interface FollowerModel extends Document {
   id_user: ObjectId;
   followers: [
     {
