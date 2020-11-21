@@ -10,7 +10,9 @@ export function connectDatabase(): Promise<Db> {
   const port = '27017';
   const databaseName = 'snapfork-test';
   return new Promise<Db>((resolve, reject) => {
-    const url = 'mongodb://'/*${username}:${password}@*/ + `${host}:${port}/${databaseName}`;
+    const url =
+      'mongodb://' /*${username}:${password}@*/ +
+      `${host}:${port}/${databaseName}`;
     mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
