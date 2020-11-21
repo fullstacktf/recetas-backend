@@ -13,15 +13,10 @@ export interface CommentModel extends Document {
 }
 
 const CommentSchema: Schema = new Schema({
-  user: {
-    type: {
-      _id: ObjectId,
-      username: String
-    }, required: true
-  },
+  user: { type: Schema.Types.Mixed, required: true },
   comment: { type: String, required: true },
   likes: { type: Number, default: 0 },
-  postiD: { type: ObjectId, required: true },
+  postiD: { type: Schema.Types.ObjectId, required: true },
   replies: { type: [Schema.Types.Mixed], default: [] }
 });
 

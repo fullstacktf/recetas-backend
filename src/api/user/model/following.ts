@@ -12,14 +12,9 @@ export interface FollowingModel extends Document {
 }
 
 const FollowingSchema: Schema = new Schema({
-  id_user: { type: ObjectId, required: true },
+  id_user: { type: Schema.Types.ObjectId, required: true },
   following: {
-    type: [
-      {
-        _id: { type: ObjectId, required: true },
-        username: { type: String, required: true }
-      }
-    ], required: true
+    type: [Schema.Types.Mixed], required: true
   }
 });
 

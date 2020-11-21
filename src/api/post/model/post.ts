@@ -20,18 +20,13 @@ export interface PostModel extends Document {
 }
 
 const PostSchema: Schema = new Schema({
-  owner: {
-    type: {
-      _id: ObjectId,
-      username: String
-    }, required: true
-  },
+  owner: { type: Schema.Types.Mixed, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   time: { type: Number, required: true },
   servings: { type: Number, required: true },
   ingredients: { type: [Schema.Types.Mixed], required: true },
-  steps: { trype: [String], required: true },
+  steps: { type: [String], required: true },
   creation: { type: Date, default: Date.now() },
   likes: { type: Number, default: 0 },
   comments: { type: Number, default: 0 },
