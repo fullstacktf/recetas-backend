@@ -6,7 +6,7 @@ export interface PostModel extends Document {
   owner: {
     _id: ObjectId;
     username: string;
-  }
+  };
   name: string;
   description: string;
   time: number;

@@ -5,10 +5,10 @@ export interface CommentModel extends Document {
   user: {
     _id: ObjectId;
     username: string;
-  },
-  comment: string,
-  likes: number,
-  postiD: ObjectId,
+  };
+  comment: string;
+  likes: number;
+  postiD: ObjectId;
   replies: [CommentModel];
 }
 
