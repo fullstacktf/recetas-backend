@@ -6,7 +6,7 @@ export interface PostModel extends Document {
   owner: {
     _id: ObjectId;
     username: string;
-	}
+  }
   name: string;
   description: string;
   time: number;
@@ -21,19 +21,21 @@ export interface PostModel extends Document {
 
 const PostSchema: Schema = new Schema({
   owner: {
-    _id: ObjectId,
-    username: String
-	},
-  name: String,
-  description: String,
-  time: Number,
-  servings: Number,
-  ingredients: [Schema.Types.Mixed],
-  steps: [String],
-  creation: Date,
-  likes: Number,
-  comments: Number,
-  tags: [String]
+    type: {
+      _id: ObjectId,
+      username: String
+    }, required: true
+  },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  time: { type: Number, required: true },
+  servings: { type: Number, required: true },
+  ingredients: { type: [Schema.Types.Mixed], required: true },
+  steps: { trype: [String], required: true },
+  creation: { type: Date, default: Date.now() },
+  likes: { type: Number, default: 0 },
+  comments: { type: Number, default: 0 },
+  tags: { type: [String] }
 });
 
 export const Post: Model<PostModel> = model<PostModel>('post', PostSchema);

@@ -23,13 +23,13 @@ const UserSchema: Schema = new Schema({
   last: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  rol: { type: Schema.Types.Mixed, default: 'user', required: true },
+  description: { type: String, default: '' },
+  publications: { type: Number, default: 0 },
+  followers: { type: Number, default: 0 },
+  following: { type: Number, default: 0 },
   creation: { type: Date, default: Date.now() },
-  lastLogin: { type: Date, default: Date.now() },
-  rol: { type: Schema.Types.Mixed, required: true },
-  description: { type: String, required: true },
-  publications: { type: Number, required: true },
-  followers: { type: Number, required: true },
-  following: { type: Number, required: true }
+  lastLogin: { type: Date, default: Date.now() }
 });
 
 export const User: Model<UserModel> = model<UserModel>('user', UserSchema);
