@@ -8,7 +8,7 @@ export function connectDatabase(): Promise<Db> {
   const password = '';
   const host = 'localhost';
   const port = '27017';
-  const databaseName = 'snapfork';
+  const databaseName = 'snapfork-test';
   return new Promise<Db>((resolve, reject) => {
     const url = 'mongodb://'/*${username}:${password}@*/ + `${host}:${port}/${databaseName}`;
     mongoose.connect(url, {
