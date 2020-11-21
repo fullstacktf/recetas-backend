@@ -3,6 +3,9 @@ import { connectDatabase } from './databaseUtils';
 import { User } from './api/user/model/user';
 import { Following } from './api/user/model/following';
 import { ObjectId } from 'mongodb';
+import userRouter from './api/user/';
+import postRouter from './api/post/';
+import commentRouter from './api/comment/';
 import { Follower } from './api/user/model/follower';
 import { Post } from './api/post/model/post';
 import { Comment } from './api/comment/model/comment';
@@ -11,9 +14,14 @@ const app = express();
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-
   res.json(await Following.find());
 });
+
+app.use('/user', userRouter);
+
+app.use('/post', postRouter);
+
+app.use('/comment', commentRouter);
 
 connectDatabase()
   .then(() => {
@@ -77,8 +85,7 @@ connectDatabase()
       comment: 'Bastante cutre la verdad',
       postiD: new ObjectId('5fb9795251cc72a384782ebc')
     });
-    newComments.save();
-    // newPosts.save();
+
     // newFollowing.save();
     // newUser.save();
     app.listen(3000, () => console.log('Listen on port 3000'));

@@ -3,7 +3,7 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/public/popular', (req, res) => {
-  res.json();
+  res.json({ message: 'OK' });
 });
 
 router.get('/:postID', (req, res) => {
@@ -59,3 +59,5 @@ router.put('/:postID', (req, res) => {
 router.delete('/:postID', (req, res) => {
   res.json();
 });
+
+export default router;
