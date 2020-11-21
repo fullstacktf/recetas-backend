@@ -1,4 +1,4 @@
-import express from './api/comment/node_modules/express';
+import express from 'express';
 import { connectDatabase } from './databaseUtils';
 
 const app = express();

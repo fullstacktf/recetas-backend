@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Db } from './api/comment/node_modules/mongodb';
+import { Db } from 'mongodb';
 
 export let database: Db;
 

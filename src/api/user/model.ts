@@ -1,4 +1,4 @@
-import { ObjectId } from '../comment/node_modules/mongodb';
+import { ObjectId } from 'mongodb';
 
 export interface Role {
   rol: 'admin' | 'user';

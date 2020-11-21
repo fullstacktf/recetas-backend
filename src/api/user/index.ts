@@ -1,4 +1,4 @@
-import express from '../comment/node_modules/express';
+import express from 'express';
 
 const router = express.Router();
 
