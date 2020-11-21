@@ -3,14 +3,22 @@ import { connectDatabase } from './databaseUtils';
 import { User } from './api/user/model/user';
 import { Following } from './api/user/model/following';
 import { ObjectId } from 'mongodb';
+import userRouter from './api/user/';
+import postRouter from './api/post/';
+import commentRouter from './api/comment/';
 
 const app = express();
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-
   res.json(await Following.find());
 });
+
+app.use('/user', userRouter);
+
+app.use('/post', postRouter);
+
+app.use('/comment', commentRouter);
 
 connectDatabase()
   .then(() => {
@@ -40,6 +48,7 @@ connectDatabase()
         }
       ]
     });
+
     // newFollowing.save();
     // newUser.save();
     app.listen(3000, () => console.log('Listen on port 3000'));
