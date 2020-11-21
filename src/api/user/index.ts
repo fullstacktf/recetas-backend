@@ -27,3 +27,11 @@ router.get('/:userID/timeline', (req, res) => {
 router.put(':userID/profile', (req, res) => {
   res.json();
 });
+
+router.post('/:userID/follow', (req, res) => {
+  res.json();
+});
+
+router.delete('/:userID/follow', (req, res) => {
+  res.json();
+});
