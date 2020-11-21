@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from '../comment/node_modules/mongodb';
 
 export interface Post {
   owner: {
