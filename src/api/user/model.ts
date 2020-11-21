@@ -19,7 +19,7 @@ export interface User {
   following: number;
 }
 
-export interface Followers {
+export interface Follower {
   id_user: ObjectId;
   followers: [
     {
