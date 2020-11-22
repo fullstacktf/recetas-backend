@@ -1,0 +1,26 @@
+name: Linters and Tests
+
+on: push
+
+jobs:
+  linters-tests:
+    name: Run Linters and Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup Node.js environment (Node 12.18.4)
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '12.18.4'
+
+      - name: Install packages
+        run: npm install
+
+      - name: Run linters
+        run: npm run lint
+
+      - name: Run test
+        run: npm test
