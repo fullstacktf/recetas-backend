@@ -1,8 +1,22 @@
 import express from 'express';
 import { connectDatabase } from './databaseUtils';
+import userRouter from './api/user/';
+import postRouter from './api/post/';
+import commentRouter from './api/comment/';
 
 const app = express();
 app.use(express.json());
+
+
+app.use('/user', userRouter);
+
+app.use('/post', postRouter);
+
+app.use('/comment', commentRouter);
+
+app.get('/', async (req, res) => {
+  res.json('OK');
+});
 
 connectDatabase()
   .then(() => {

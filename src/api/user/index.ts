@@ -3,7 +3,7 @@ import express from 'express';
 const router = express.Router();
 
 router.post('/login', (req, res) => {
-  res.json();
+  res.json({ message: 'OK' });
 });
 
 router.post('/register', (req, res) => {
@@ -35,3 +35,5 @@ router.post('/:userID/follow', (req, res) => {
 router.delete('/:userID/follow', (req, res) => {
   res.json();
 });
+
+export default router;
