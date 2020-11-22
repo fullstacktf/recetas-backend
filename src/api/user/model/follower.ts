@@ -12,7 +12,7 @@ export interface FollowerModel extends Document {
 }
 
 const FollowerSchema: Schema = new Schema({
-  id_user: { type: Schema.Types.ObjectId, required: true },
+  id_user: { type: Schema.Types.ObjectId, required: true, unique: true },
   follower: {
     type: [Schema.Types.Mixed], required: true
   }

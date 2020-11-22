@@ -3,12 +3,12 @@ import { Document, model, Model, Schema } from 'mongoose';
 import { AllergenModel } from './allergen';
 
 export interface IngredientModel extends Document {
-	name: string;
-	allergen: [AllergenModel];
+  name: string;
+  allergen: [AllergenModel];
 }
 
 const IngredientSchema: Schema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   allergen: { type: Schema.Types.Mixed }
 });
 

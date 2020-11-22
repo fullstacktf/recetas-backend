@@ -5,7 +5,7 @@ export interface AllergenModel extends Document {
 }
 
 const AllergenSchema: Schema = new Schema({
-  name: { type: String, required: true }
+  name: { type: String, required: true, unique: true }
 });
 
 export const Allergen: Model<AllergenModel> = model<AllergenModel>('allergen', AllergenSchema);

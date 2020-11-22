@@ -18,10 +18,10 @@ export interface UserModel extends Document {
 }
 
 const UserSchema: Schema = new Schema({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   last: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   rol: { type: Schema.Types.Mixed, default: 'user', required: true },
   description: { type: String, default: '' },
