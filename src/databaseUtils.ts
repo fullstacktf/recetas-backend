@@ -4,8 +4,8 @@ import { Db } from 'mongodb';
 export let database: Db;
 
 export function connectDatabase(): Promise<Db> {
-  const username = '';
-  const password = '';
+  // const username = '';
+  // const password = '';
   const host = 'localhost';
   const port = '27017';
   const databaseName = 'snapfork-test';

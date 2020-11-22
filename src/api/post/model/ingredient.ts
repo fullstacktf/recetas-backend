@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { Document, model, Model, Schema } from 'mongoose';
 import { AllergenModel } from './allergen';
 
