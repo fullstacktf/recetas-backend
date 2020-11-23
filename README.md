@@ -42,7 +42,7 @@
 ### PROFILE
 
     GET     api/v1/posts/{postID}/save
-    POST    api/v1/{userID}/follow
+    POST    api/v1/users/{userID}/follow
     DELETE  api/v1/{userID}/follow
     GET     api/v1/users/{userID}/profile
     PUT     api/v1/users/{userID}/profile
