@@ -1,59 +1,57 @@
 # Proyecto Instagram de Recetas: Backend
 
----
-
 ## MVP Diseño BBDD
 
 ### Modelo ER
 
-![Modelo ER](media/SnapFork-ER.png "Modelo Entidad Relación")
+![Modelo ER](media/db.png "Modelo Entidad Relación")
 
 ## ENDPOINTS
 
-### LOGIN:
+### LOGIN
 
     POST    api/v1/users/login
     PUT     api/v1/users/password/reset
 
-### REGISTER:
+### REGISTER
 
-    POST	api/v1/users/register
+    POST    api/v1/users/register
 
-### HOME:
+### HOME
 
     GET     api/v1/posts/public/popular
 
-### TIMELINE:
+### TIMELINE
 
     GET     api/v1/users/{userID}/timeline
 
-### RECETA-COMPLETA/PREVIEW:
+### RECETA-COMPLETA/PREVIEW
 
-    GET		api/v1/posts/{PostID}
-    POST	api/v1/posts/{postID}/like
-    DELETE	api/v1/posts/{postID}/like
-    POST	api/v1/posts/{postID}/comment
-    PUT		api/v1/posts/{postID}/comment
-    DELETE	api/v1/posts/{postID}/comment
-    POST	api/v1/posts/{postID}/save
-    DELETE	api/v1/posts/{postID}/save
-    GET		api/v1/posts/tag/{tagID}
-    POST	api/v1/comments/{commentID}/like
-    DELETE	api/v1/comments/{commentID}/like
+    GET     api/v1/posts/{PostID}
+    POST    api/v1/posts/{postID}/like
+    DELETE  api/v1/posts/{postID}/like
+    POST    api/v1/posts/{postID}/comment
+    PUT     api/v1/posts/{postID}/comment
+    DELETE  api/v1/posts/{postID}/comment
+    POST    api/v1/posts/{postID}/save
+    DELETE  api/v1/posts/{postID}/save
+    GET     api/v1/posts/tag/{tagID}
+    POST    api/v1/comments/{commentID}/like
+    DELETE  api/v1/comments/{commentID}/like
 
-### PROFILE:
+### PROFILE
 
-    GET		api/v1/posts/{postID}/save
-    POST	api/v1/follow/{userID}
-    DELETE	api/v1/follow/{userID}
-    GET		api/v1/users/{userID}/profile
-    PUT		api/v1/users/{userID}/profile
-    POST	api/v1/posts
-    PUT		api/v1/posts/{postID}
-    DELETE	api/v1/posts/{postID}
+    GET     api/v1/posts/{postID}/save
+    POST    api/v1/users/{userID}/follow
+    DELETE  api/v1/users/{userID}/follow
+    GET     api/v1/users/{userID}/profile
+    PUT     api/v1/users/{userID}/profile
+    POST    api/v1/posts
+    PUT     api/v1/posts/{postID}
+    DELETE  api/v1/posts/{postID}
 
 ## Authors
 
 [Imar Abreu Díaz](https://github.com/izm20)  
-[Francisco Javier Mendoza Álvarez](https://github.com/PanchoMen)
+[Francisco Javier Mendoza Álvarez](https://github.com/PanchoMen)  
 [Daniel Rodríguez Suárez](https://github.com/Danielmagox)
