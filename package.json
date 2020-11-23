@@ -22,7 +22,8 @@
     "build": "tsc",
     "dev": "nodemon src/index.ts",
     "test": "jest",
-    "lint": "eslint --max-warnings 0 . --ext .ts"
+    "lint": "eslint --max-warnings 0 . --ext .ts",
+    "version": "node -p -e 'require(`./package.json`).version'"
   },
   "jest": {
     "preset": "ts-jest"
