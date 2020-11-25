@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPost, getPostByTag, addPostLike, removePostLike } from './controller';
+import { getPost, getPostByTag, addPostLike, removePostLike, addPostComment, removePostComment } from './controller';
 
 const router = express.Router();
 
@@ -45,17 +45,26 @@ router.delete('/:postID/like', async (req, res) => {
   }
 });
 
-router.post('/:postID/comment', (req, res) => {
-
-  res.json();
+router.post('/:postID/comment', async (req, res) => {
+  try {
+    const comment = await addPostComment(req.params.postID, req.body);
+    res.status(200).json({ data: comment });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.put('/:postID/comment', (req, res) => {
   res.json();
 });
 
-router.delete('/:postID/comment', (req, res) => {
-  res.json();
+router.delete('/:postID/comment', async (req, res) => {
+  try {
+    const comment = await removePostComment(req.params.postID, req.body);
+    res.status(200).json({ data: comment });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.post('/:postID/save', (req, res) => {

@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { CommentModel, Comment } from '../comment/model/comment';
 import { Post } from './model/post';
 
 export const getPost = (id: string) => {
@@ -30,4 +31,18 @@ const checkZeroLikes = async (_id: ObjectId): Promise<boolean> => {
     throw new Error('No existe el id');
   }
   return result.likes == 0 ? true : false;
+};
+
+export const addPostComment = async (id: string, comment: CommentModel) => {
+  const _id = new ObjectId(id);
+  // const newComment = new Comment(comment);
+  // createComment(newComment);
+  return Post.update({ _id: _id }, { $inc: { comments: 1 } });
+};
+
+export const removePostComment = async (id: string, commentID: string) => {
+  const _id = new ObjectId(id);
+  // const _commentID = new ObjectId(commentID);
+  // removeComment(_commentID);
+  return Post.update({ _id: _id }, { $inc: { comments: -1 } });
 };
