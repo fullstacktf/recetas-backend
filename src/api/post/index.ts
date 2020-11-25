@@ -12,7 +12,7 @@ router.get('/:postID', async (req, res) => {
     const post = await getPost(req.params.postID);
     res.status(200).json({ data: post });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: String(error) });
   }
 });
 
@@ -21,7 +21,7 @@ router.get('/tag/:tagID', async (req, res) => {
     const posts = await getPostByTag(req.params.tagID);
     res.status(200).json({ data: posts });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: String(error) });
   }
 });
 
@@ -32,7 +32,7 @@ router.post('/:postID/like', async (req, res) => {
     const post = await addPostLike(req.params.postID);
     res.status(200).json({ data: post });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: String(error) });
   }
 });
 
@@ -46,6 +46,7 @@ router.delete('/:postID/like', async (req, res) => {
 });
 
 router.post('/:postID/comment', (req, res) => {
+
   res.json();
 });
 
