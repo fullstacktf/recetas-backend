@@ -9,3 +9,25 @@ export const getPost = (id: string) => {
 export const getPostByTag = (tag: string) => {
   return Post.find({ tags: tag }, { __v: 0 });
 };
+
+export const addPostLike = (id: string) => {
+  const _id = new ObjectId(id);
+  return Post.update({ _id: _id }, { $inc: { likes: 1 } });
+};
+
+export const removePostLike = async (id: string) => {
+  const _id = new ObjectId(id);
+  const isZero = await checkZeroLikes(_id);
+  if (isZero) {
+    throw new Error('No puede haber post con likes negativos');
+  }
+  return Post.update({ _id: _id }, { $inc: { likes: -1 } });
+};
+
+const checkZeroLikes = async (_id: ObjectId): Promise<boolean> => {
+  const result = await Post.findById({ _id }, { likes: 1 });
+  if (!result) {
+    throw new Error('No existe el id');
+  }
+  return result.likes == 0 ? true : false;
+};
