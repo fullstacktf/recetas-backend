@@ -7,13 +7,19 @@ import {
   addPostComment,
   removePostComment,
   createPost,
-  removePost
+  removePost,
+  getPostByLikes
 } from './controller';
 
 const router = express.Router();
 
-router.get('/public/popular', (req, res) => {
-  res.json({ message: 'OK' });
+router.get('/public/popular', async (req, res) => {
+  try {
+    const posts = await getPostByLikes();
+    res.status(200).json({ data: posts });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.get('/:postID', async (req, res) => {

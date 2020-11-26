@@ -68,3 +68,7 @@ export const removePost = async (id: string) => {
   const comments = await removeCommentByPostId(_id);
   return { result, comments };
 };
+
+export const getPostByLikes = () => {
+  return Post.find({}, { __v: 0 }).sort({ likes: -1 }).limit(15);
+};
