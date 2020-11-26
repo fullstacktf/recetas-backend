@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { createComment, removeComment } from '../comment/controller';
 import { CommentModel } from '../comment/model/comment';
-import { Post } from './model/post';
+import { Post, PostModel } from './model/post';
 
 export const getPost = (id: string) => {
   const _id = new ObjectId(id);
@@ -47,4 +47,10 @@ export const removePostComment = async (id: string, commentID: string) => {
     throw new Error('El comentario no existe');
   }
   return Post.update({ _id: _id }, { $inc: { comments: -1 } });
+};
+
+export const createPost = async (post: PostModel) => {
+  post.owner._id = new ObjectId(post.owner._id);
+  const newPost = new Post(post);
+  return newPost.save();
 };

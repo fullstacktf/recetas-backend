@@ -34,4 +34,3 @@ const PostSchema: Schema = new Schema({
 });
 
 export const Post: Model<PostModel> = model<PostModel>('post', PostSchema);
-
