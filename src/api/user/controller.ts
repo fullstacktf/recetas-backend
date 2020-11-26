@@ -1,14 +1,17 @@
 import { ObjectId } from 'mongodb';
+import { Follower } from './model/follower';
+import { Following } from './model/following';
 import { User, UserModel } from './model/user';
 
 export const getUsers = () => {
-  return User.find({}, { username: 1, _id: 0 });
+  return User.find({}, { username: 1, _id: 1 });
 };
 
-export const getUserById = (username: string) => {
-  return User.find(
-    { username: username },
-    { _id: 0, _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 }
+export const getUserById = (id: string) => {
+  const _id = new ObjectId(id);
+  return User.findById(
+    { _id: _id },
+    { _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 }
   );
 };
 
@@ -38,5 +41,40 @@ export const setUserPass = async (
   return User.update(
     { _id: _id, password: pass },
     { $set: { password: newPass } }
+  );
+};
+
+export const addFollow = async (id: string, followingUser: string) => {
+  const _id = new ObjectId(id);
+  const _followingUser = new ObjectId(followingUser);
+  const follow = await addFollower(_id, _followingUser);
+  const following = await addFollowing(_id, _followingUser);
+  return { follow, following };
+  // await User.update({ _id: _id }, { $inc: { following: 1 } });
+  // await User.update({ _id: _followingUser }, { $inc: { followers: 1 } });
+};
+
+const addFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
+  const user = await User.findById({ _id: follower }, { _id: 1, username: 1 });
+  if (!user) {
+    throw new Error('Usuario no existe');
+  }
+  return Follower.update(
+    { id_user: _followingUser },
+    { $push: { followers: user } }
+  );
+};
+
+const addFollowing = async (follower: ObjectId, _followingUser: ObjectId) => {
+  const user = await User.findById(
+    { _id: _followingUser },
+    { _id: 1, username: 1 }
+  );
+  if (!user) {
+    throw new Error('Usuario no existe');
+  }
+  return Following.update(
+    { id_user: follower },
+    { $push: { following: user } }
   );
 };

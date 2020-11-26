@@ -1,5 +1,11 @@
 import express from 'express';
-import { createUser, getUserById, getUsers, setUserPass } from './controller';
+import {
+  addFollow,
+  createUser,
+  getUserById,
+  getUsers,
+  setUserPass
+} from './controller';
 
 const router = express.Router();
 
@@ -48,8 +54,13 @@ router.put(':userID/profile', (req, res) => {
   res.json({});
 });
 
-router.post('/:userID/follow', (req, res) => {
-  res.json({});
+router.post('/:userID/follow', async (req, res) => {
+  try {
+    const user = await addFollow(req.body.id, req.params.userID);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.delete('/:userID/follow', (req, res) => {
