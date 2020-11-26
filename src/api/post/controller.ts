@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
-import { CommentModel, Comment } from '../comment/model/comment';
+import { createComment, removeComment } from '../comment/controller';
+import { CommentModel } from '../comment/model/comment';
 import { Post } from './model/post';
 
 export const getPost = (id: string) => {
@@ -35,14 +36,15 @@ const checkZeroLikes = async (_id: ObjectId): Promise<boolean> => {
 
 export const addPostComment = async (id: string, comment: CommentModel) => {
   const _id = new ObjectId(id);
-  // const newComment = new Comment(comment);
-  // createComment(newComment);
+  createComment(comment);
   return Post.update({ _id: _id }, { $inc: { comments: 1 } });
 };
 
 export const removePostComment = async (id: string, commentID: string) => {
   const _id = new ObjectId(id);
-  // const _commentID = new ObjectId(commentID);
-  // removeComment(_commentID);
+  const result = await removeComment(commentID);
+  if (!result) {
+    throw new Error('El comentario no existe');
+  }
   return Post.update({ _id: _id }, { $inc: { comments: -1 } });
 };

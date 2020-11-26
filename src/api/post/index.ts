@@ -1,5 +1,12 @@
 import express from 'express';
-import { getPost, getPostByTag, addPostLike, removePostLike, addPostComment, removePostComment } from './controller';
+import {
+  getPost,
+  getPostByTag,
+  addPostLike,
+  removePostLike,
+  addPostComment,
+  removePostComment
+} from './controller';
 
 const router = express.Router();
 
@@ -60,7 +67,10 @@ router.put('/:postID/comment', (req, res) => {
 
 router.delete('/:postID/comment', async (req, res) => {
   try {
-    const comment = await removePostComment(req.params.postID, req.body);
+    const comment = await removePostComment(
+      req.params.postID,
+      req.body.commentID
+    );
     res.status(200).json({ data: comment });
   } catch (error) {
     res.status(500).json({ error: String(error) });
