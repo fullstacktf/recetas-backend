@@ -1,5 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { createComment, removeComment } from '../comment/controller';
+import {
+  createComment,
+  removeComment,
+  removeCommentByPostId
+} from '../comment/controller';
 import { CommentModel } from '../comment/model/comment';
 import { Post, PostModel } from './model/post';
 
@@ -53,4 +57,14 @@ export const createPost = async (post: PostModel) => {
   post.owner._id = new ObjectId(post.owner._id);
   const newPost = new Post(post);
   return newPost.save();
+};
+
+export const removePost = async (id: string) => {
+  const _id = new ObjectId(id);
+  const result = await Post.findByIdAndDelete({ _id });
+  if (!result) {
+    throw new Error('El post no existe');
+  }
+  const comments = await removeCommentByPostId(_id);
+  return { result, comments };
 };

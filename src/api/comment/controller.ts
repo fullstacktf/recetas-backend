@@ -11,3 +11,7 @@ export const removeComment = (commentID: string) => {
   const _id = new ObjectId(commentID);
   return Comment.findByIdAndDelete({ _id });
 };
+
+export const removeCommentByPostId = (postID: ObjectId) => {
+  return Comment.deleteMany({ postID: postID });
+};

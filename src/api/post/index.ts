@@ -6,7 +6,8 @@ import {
   removePostLike,
   addPostComment,
   removePostComment,
-  createPost
+  createPost,
+  removePost
 } from './controller';
 
 const router = express.Router();
@@ -90,6 +91,19 @@ router.get('/:postID/save', (req, res) => {
   res.json();
 });
 
+router.put('/:postID', (req, res) => {
+  res.json();
+});
+
+router.delete('/:postID', async (req, res) => {
+  try {
+    const post = await removePost(req.params.postID);
+    res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const post = await createPost(req.body);
@@ -97,14 +111,6 @@ router.post('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
-});
-
-router.put('/:postID', (req, res) => {
-  res.json();
-});
-
-router.delete('/:postID', (req, res) => {
-  res.json();
 });
 
 export default router;
