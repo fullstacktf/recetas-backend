@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, getUserById, getUsers } from './controller';
+import { createUser, getUserById, getUsers, setUserPass } from './controller';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
     const user = await createUser(req.body);
     res.status(200).json({ data: user });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: String(error) });
   }
 });
 
@@ -21,14 +21,23 @@ router.get('/:userID/profile', async (req, res) => {
     const user = await getUserById(req.params.userID);
     res.status(200).json({ data: user });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: String(error) });
   }
 });
 
 // middleware USUARIOS LOGUEADOS
 
-router.put('/password/reset', (req, res) => {
-  res.json({});
+router.put('/password/reset', async (req, res) => {
+  try {
+    const user = await setUserPass(
+      req.body.userID,
+      req.body.pass,
+      req.body.newPass
+    );
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.get('/:userID/timeline', (req, res) => {
@@ -52,7 +61,7 @@ router.get('/', async (req, res) => {
     const users = await getUsers();
     res.status(200).json({ data: users });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: String(error) });
   }
 });
 

@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { User, UserModel } from './model/user';
 
 export const getUsers = () => {
@@ -26,4 +27,16 @@ const checkUsernameEmail = async (username: string, email: string) => {
     { _id: 0, username: 1, email: 1 }
   );
   return result.length ? false : true;
+};
+
+export const setUserPass = async (
+  userID: string,
+  pass: string,
+  newPass: string
+) => {
+  const _id = new ObjectId(userID);
+  return User.update(
+    { _id: _id, password: pass },
+    { $set: { password: newPass } }
+  );
 };
