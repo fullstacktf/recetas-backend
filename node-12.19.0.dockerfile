@@ -1,8 +1,6 @@
 FROM node:12-slim
 WORKDIR /app
 COPY ./ /app/
-# COPY src /app/src/
-# COPY package*.json /app/
 RUN apt-get update && \
     npm install && \
     apt-get clean && \
