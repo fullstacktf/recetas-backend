@@ -49,9 +49,9 @@ export const addFollow = async (id: string, followingUser: string) => {
   const _followingUser = new ObjectId(followingUser);
   const follow = await addFollower(_id, _followingUser);
   const following = await addFollowing(_id, _followingUser);
+  await User.update({ _id: _id }, { $inc: { following: 1 } });
+  await User.update({ _id: _followingUser }, { $inc: { followers: 1 } });
   return { follow, following };
-  // await User.update({ _id: _id }, { $inc: { following: 1 } });
-  // await User.update({ _id: _followingUser }, { $inc: { followers: 1 } });
 };
 
 const addFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
