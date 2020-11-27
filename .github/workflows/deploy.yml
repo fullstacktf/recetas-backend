@@ -23,9 +23,6 @@ jobs:
       - name: Get app version
         id: app-version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
-      - name: Show new version
-        run: echo 'New version snapfork-backend:${{steps.app-version.outputs.current-version}} generated'
-        shell: bash
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -35,3 +32,7 @@ jobs:
           push: true
           tags: |
             snapfork/snapforkbackend:latest
+            snapfork/snapforkbackend:${{steps.app-version.outputs.current-version}}
+      - name: Show new version
+        run: echo 'New version snapfork-backend:${{steps.app-version.outputs.current-version}} generated'
+        shell: bash
