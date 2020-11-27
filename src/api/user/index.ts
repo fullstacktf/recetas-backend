@@ -4,6 +4,7 @@ import {
   createUser,
   getUserById,
   getUsers,
+  removeFollow,
   setUserPass
 } from './controller';
 
@@ -63,8 +64,13 @@ router.post('/:userID/follow', async (req, res) => {
   }
 });
 
-router.delete('/:userID/follow', (req, res) => {
-  res.json({});
+router.delete('/:userID/follow', async (req, res) => {
+  try {
+    const user = await removeFollow(req.body.id, req.params.userID);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.get('/', async (req, res) => {
