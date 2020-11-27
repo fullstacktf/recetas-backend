@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { getPostTimeline } from '../post/controller';
 import { Follower } from './model/follower';
 import { Following } from './model/following';
 import { User, UserModel } from './model/user';
@@ -84,4 +85,15 @@ const removeFollowing = async (follower: ObjectId, _followingUser: ObjectId) => 
     throw new Error('Usuario no existe');
   }
   return Following.update({ id_user: follower }, { $pull: { following: user } });
+};
+
+export const getTimeline = async (id: string) => {
+  const _id = new ObjectId(id);
+  const following = await getFollowing(_id);
+  return getPostTimeline(following);
+};
+
+const getFollowing = async (_id: ObjectId) => {
+  const following = await Following.find({ id_user: _id }, { following: 1, _id: 0 });
+  return following[0].following.map((elem) => elem._id);
 };

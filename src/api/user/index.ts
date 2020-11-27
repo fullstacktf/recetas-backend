@@ -2,6 +2,7 @@ import express from 'express';
 import {
   addFollow,
   createUser,
+  getTimeline,
   getUserById,
   getUsers,
   removeFollow,
@@ -36,19 +37,20 @@ router.get('/:userID/profile', async (req, res) => {
 
 router.put('/password/reset', async (req, res) => {
   try {
-    const user = await setUserPass(
-      req.body.userID,
-      req.body.pass,
-      req.body.newPass
-    );
+    const user = await setUserPass(req.body.userID, req.body.pass, req.body.newPass);
     res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
 });
 
-router.get('/:userID/timeline', (req, res) => {
-  res.json({});
+router.get('/:userID/timeline', async (req, res) => {
+  try {
+    const posts = await getTimeline(req.params.userID);
+    res.status(200).json({ data: posts });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.put(':userID/profile', (req, res) => {
