@@ -97,3 +97,19 @@ const getFollowing = async (_id: ObjectId) => {
   const following = await Following.find({ id_user: _id }, { following: 1, _id: 0 });
   return following[0].following.map((elem) => elem._id);
 };
+
+export const editUser = (id: string, user: UserModel) => {
+  const _id = new ObjectId(id);
+  return User.update(
+    { _id: _id },
+    {
+      $set: {
+        name: user.name,
+        last: user.last,
+        email: user.email,
+        password: user.password,
+        description: user.description
+      }
+    }
+  );
+};
