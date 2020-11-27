@@ -31,8 +31,8 @@ jobs:
           file: ./node-12.19.0.dockerfile
           push: true
           tags: |
-            snapfork/snapfork_backend:latest
-            snapfork/snapfork_backend:${{ steps.app-version.outputs.current-version }}
+            snapfork/snapforkbackend:latest
+            snapfork/snapforkbackend:${{ steps.app-version.outputs.current-version }}
       - name: Show new version
         run: echo 'New version snapfork-backend:${{steps.app-version.outputs.current-version}} generated'
         shell: bash
