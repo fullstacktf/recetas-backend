@@ -32,7 +32,7 @@ jobs:
           push: true
           tags: |
             snapfork/snapforkbackend:latest
-            snapfork/snapforkbackend:${{ steps.app-version.outputs.current-version }}
+            snapfork/snapforkbackend:1.0.0
       - name: Show new version
         run: echo 'New version snapfork-backend:${{steps.app-version.outputs.current-version}} generated'
         shell: bash
