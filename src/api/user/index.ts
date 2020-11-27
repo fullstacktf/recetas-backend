@@ -10,7 +10,7 @@ router.post('/register', (req, res) => {
   res.json();
 });
 
-router.get(':userID/profile', (req, res) => {
+router.get('/:userID/profile', (req, res) => {
   res.json();
 });
 
@@ -24,7 +24,7 @@ router.get('/:userID/timeline', (req, res) => {
   res.json();
 });
 
-router.put(':userID/profile', (req, res) => {
+router.put('/:userID/profile', (req, res) => {
   res.json();
 });
 
