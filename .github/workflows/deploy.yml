@@ -34,5 +34,5 @@ jobs:
             snapfork/snapfork-backend:latest
             snapfork/snapfork-backend:${{ steps.app-version.outputs.current-version }}
       - name: Show new version
-        run: |
-        echo 'New version: snapfork-backend:${{steps.app-version.outputs.current-version}}'
+        run: echo New version: snapfork-backend:${{steps.app-version.outputs.current-version}}
+        shell: bash
