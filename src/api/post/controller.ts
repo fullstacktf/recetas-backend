@@ -1,6 +1,8 @@
+import { O_NONBLOCK } from 'constants';
 import { ObjectId } from 'mongodb';
 import {
   createComment,
+  editComment,
   removeComment,
   removeCommentByPostId
 } from '../comment/controller';
@@ -42,6 +44,11 @@ export const addPostComment = async (id: string, comment: CommentModel) => {
   const _id = new ObjectId(id);
   createComment(comment);
   return Post.update({ _id: _id }, { $inc: { comments: 1 } });
+};
+
+export const editPostComment = async (commentID: string, text: string) => {
+  const _commentID = new ObjectId(commentID);
+  return editComment(_commentID, text);
 };
 
 export const removePostComment = async (id: string, commentID: string) => {

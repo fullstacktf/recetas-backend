@@ -8,7 +8,8 @@ import {
   removePostComment,
   createPost,
   removePost,
-  getPostByLikes
+  getPostByLikes,
+  editPostComment
 } from './controller';
 
 const router = express.Router();
@@ -69,8 +70,13 @@ router.post('/:postID/comment', async (req, res) => {
   }
 });
 
-router.put('/:postID/comment', (req, res) => {
-  res.json();
+router.put('/:postID/comment', async (req, res) => {
+  try {
+    const comment = await editPostComment(req.body.commentID, req.body.text);
+    res.status(200).json({ data: comment });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.delete('/:postID/comment', async (req, res) => {
