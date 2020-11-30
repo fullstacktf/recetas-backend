@@ -1,4 +1,3 @@
-import { O_NONBLOCK } from 'constants';
 import { ObjectId } from 'mongodb';
 import {
   createComment,
