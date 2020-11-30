@@ -72,3 +72,10 @@ export const removePost = async (id: string) => {
 export const getPostByLikes = () => {
   return Post.find({}, { __v: 0 }).sort({ likes: -1 }).limit(15);
 };
+
+export const getPostTimeline = (following: ObjectId[]) => {
+  // TODO: Poner limit
+  return Post.find({ 'owner._id': following }, { __v: 0 }).sort({
+    creation: -1
+  });
+};
