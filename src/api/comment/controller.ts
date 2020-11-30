@@ -16,6 +16,10 @@ export const removeCommentByPostId = (postID: ObjectId) => {
   return Comment.deleteMany({ postID: postID });
 };
 
+export const editComment = (commentID: ObjectId, text: string) => {
+  return Comment.update({ _id: commentID }, { $set: { comment: text } });
+};
+
 export const addLike = (id: string) => {
   const _id = new ObjectId(id);
   return Comment.update({ _id: _id }, { $inc: { likes: 1 } });
