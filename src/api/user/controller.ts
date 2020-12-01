@@ -10,7 +10,10 @@ export const getUsers = () => {
 
 export const getUserById = (id: string) => {
   const _id = new ObjectId(id);
-  return User.findById({ _id: _id }, { _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 });
+  return User.findById(
+    { _id: _id },
+    { _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 }
+  );
 };
 
 export const createUser = async (user: UserModel) => {
@@ -30,9 +33,16 @@ const checkUsernameEmail = async (username: string, email: string) => {
   return result.length ? false : true;
 };
 
-export const setUserPass = async (userID: string, pass: string, newPass: string) => {
+export const setUserPass = async (
+  userID: string,
+  pass: string,
+  newPass: string
+) => {
   const _id = new ObjectId(userID);
-  return User.update({ _id: _id, password: pass }, { $set: { password: newPass } });
+  return User.update(
+    { _id: _id, password: pass },
+    { $set: { password: newPass } }
+  );
 };
 
 export const addFollow = async (id: string, followingUser: string) => {
@@ -50,15 +60,24 @@ const addFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Follower.update({ id_user: _followingUser }, { $push: { followers: user } });
+  return Follower.update(
+    { id_user: _followingUser },
+    { $push: { followers: user } }
+  );
 };
 
 const addFollowing = async (follower: ObjectId, _followingUser: ObjectId) => {
-  const user = await User.findById({ _id: _followingUser }, { _id: 1, username: 1 });
+  const user = await User.findById(
+    { _id: _followingUser },
+    { _id: 1, username: 1 }
+  );
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Following.update({ id_user: follower }, { $push: { following: user } });
+  return Following.update(
+    { id_user: follower },
+    { $push: { following: user } }
+  );
 };
 
 export const removeFollow = async (id: string, followingUser: string) => {
@@ -76,15 +95,27 @@ const removeFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Follower.update({ id_user: _followingUser }, { $pull: { followers: user } });
+  return Follower.update(
+    { id_user: _followingUser },
+    { $pull: { followers: user } }
+  );
 };
 
-const removeFollowing = async (follower: ObjectId, _followingUser: ObjectId) => {
-  const user = await User.findById({ _id: _followingUser }, { _id: 1, username: 1 });
+const removeFollowing = async (
+  follower: ObjectId,
+  _followingUser: ObjectId
+) => {
+  const user = await User.findById(
+    { _id: _followingUser },
+    { _id: 1, username: 1 }
+  );
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Following.update({ id_user: follower }, { $pull: { following: user } });
+  return Following.update(
+    { id_user: follower },
+    { $pull: { following: user } }
+  );
 };
 
 export const getTimeline = async (id: string) => {
@@ -94,7 +125,10 @@ export const getTimeline = async (id: string) => {
 };
 
 const getFollowing = async (_id: ObjectId) => {
-  const following = await Following.find({ id_user: _id }, { following: 1, _id: 0 });
+  const following = await Following.find(
+    { id_user: _id },
+    { following: 1, _id: 0 }
+  );
   return following[0].following.map((elem) => elem._id);
 };
 
@@ -112,4 +146,8 @@ export const editUser = (id: string, user: UserModel) => {
       }
     }
   );
+};
+
+export const saveUserPost = (postID: ObjectId, userID: ObjectId) => {
+  return User.update({ _id: userID }, { $push: { saved: postID } });
 };
