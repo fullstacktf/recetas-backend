@@ -10,7 +10,8 @@ import {
   removePost,
   getPostByLikes,
   editPostComment,
-  savePost
+  savePost,
+  deleteSavePost
 } from './controller';
 
 const router = express.Router();
@@ -101,8 +102,13 @@ router.post('/:postID/save', async (req, res) => {
   }
 });
 
-router.delete('/:postID/save', (req, res) => {
-  res.json();
+router.delete('/:postID/save', async (req, res) => {
+  try {
+    const post = await deleteSavePost(req.params.postID, req.body.userID);
+    res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.get('/:postID/save', (req, res) => {
