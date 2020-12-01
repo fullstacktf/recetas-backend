@@ -148,6 +148,25 @@ export const editUser = (id: string, user: UserModel) => {
   );
 };
 
-export const saveUserPost = (postID: ObjectId, userID: ObjectId) => {
+export const saveUserPost = async (postID: ObjectId, userID: ObjectId) => {
+  const post = await checkSaveUserPost(postID, userID);
+  if (post.length) {
+    throw new Error('Este usuario ya tiene guardado el post');
+  }
   return User.update({ _id: userID }, { $push: { saved: postID } });
+};
+
+export const deleteSaveUserPost = async (
+  postID: ObjectId,
+  userID: ObjectId
+) => {
+  const post = await checkSaveUserPost(postID, userID);
+  if (!post.length) {
+    throw new Error('Este usuario no tiene guardado el post');
+  }
+  return User.update({ _id: userID }, { $pull: { saved: postID } });
+};
+
+const checkSaveUserPost = (postID: ObjectId, userID: ObjectId) => {
+  return User.find({ _id: userID, saved: postID }, { _id: 1 });
 };
