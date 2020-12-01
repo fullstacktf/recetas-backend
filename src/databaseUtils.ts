@@ -6,7 +6,7 @@ export let database: Db;
 export function connectDatabase(): Promise<Db> {
   // const username = '';
   // const password = '';
-  const host = 'mongoDB';
+  const host = 'mongobd';
   const port = '27017';
   const databaseName = 'snapfork';
   return new Promise<Db>((resolve, reject) => {
