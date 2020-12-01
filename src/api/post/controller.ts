@@ -6,6 +6,7 @@ import {
   removeCommentByPostId
 } from '../comment/controller';
 import { CommentModel } from '../comment/model/comment';
+import { saveUserPost } from '../user/controller';
 import { Post, PostModel } from './model/post';
 
 export const getPost = (id: string) => {
@@ -84,4 +85,10 @@ export const getPostTimeline = (following: ObjectId[]) => {
   return Post.find({ 'owner._id': following }, { __v: 0 }).sort({
     creation: -1
   });
+};
+
+export const savePost = (postID: string, userID: string) => {
+  const _postID = new ObjectId(postID);
+  const _userID = new ObjectId(userID);
+  return saveUserPost(_postID, _userID);
 };
