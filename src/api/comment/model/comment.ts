@@ -20,4 +20,7 @@ const CommentSchema: Schema = new Schema({
   replies: { type: [Schema.Types.Mixed], default: [] }
 });
 
-export const Comment: Model<CommentModel> = model<CommentModel>('comment', CommentSchema);
+export const Comment: Model<CommentModel> = model<CommentModel>(
+  'comment',
+  CommentSchema
+);
