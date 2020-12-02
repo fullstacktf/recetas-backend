@@ -24,7 +24,7 @@ export const getPostByTag = (tag: string) => {
 
 export const addPostLike = (id: string) => {
   const _id = new ObjectId(id);
-  return Post.update({ _id: _id }, { $inc: { likes: 1 } });
+  return Post.updateOne({ _id: _id }, { $inc: { likes: 1 } });
 };
 
 export const removePostLike = async (id: string) => {
@@ -33,7 +33,7 @@ export const removePostLike = async (id: string) => {
   if (isZero) {
     throw new Error('No puede haber post con likes negativos');
   }
-  return Post.update({ _id: _id }, { $inc: { likes: -1 } });
+  return Post.updateOne({ _id: _id }, { $inc: { likes: -1 } });
 };
 
 const checkZeroLikes = async (_id: ObjectId): Promise<boolean> => {
@@ -47,7 +47,7 @@ const checkZeroLikes = async (_id: ObjectId): Promise<boolean> => {
 export const addPostComment = async (id: string, comment: CommentModel) => {
   const _id = new ObjectId(id);
   createComment(comment);
-  return Post.update({ _id: _id }, { $inc: { comments: 1 } });
+  return Post.updateOne({ _id: _id }, { $inc: { comments: 1 } });
 };
 
 export const editPostComment = async (commentID: string, text: string) => {
@@ -61,7 +61,7 @@ export const removePostComment = async (id: string, commentID: string) => {
   if (!result) {
     throw new Error('El comentario no existe');
   }
-  return Post.update({ _id: _id }, { $inc: { comments: -1 } });
+  return Post.updateOne({ _id: _id }, { $inc: { comments: -1 } });
 };
 
 export const createPost = async (post: PostModel) => {
@@ -110,5 +110,5 @@ export const getSavePost = (userID: string) => {
 
 export const editPost = async (postID: string, post: PostModel) => {
   const _postID = new ObjectId(postID);
-  return Post.update({ _id: _postID }, { $set: post });
+  return Post.updateOne({ _id: _postID }, { $set: post });
 };
