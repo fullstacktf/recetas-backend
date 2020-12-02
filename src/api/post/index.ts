@@ -12,7 +12,8 @@ import {
   editPostComment,
   savePost,
   deleteSavePost,
-  getSavePost
+  getSavePost,
+  editPost
 } from './controller';
 
 const router = express.Router();
@@ -122,8 +123,13 @@ router.get('/:postID/save', async (req, res) => {
   }
 });
 
-router.put('/:postID', (req, res) => {
-  res.json();
+router.put('/:postID', async (req, res) => {
+  try {
+    const post = await editPost(req.params.postID, req.body);
+    res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.delete('/:postID', async (req, res) => {

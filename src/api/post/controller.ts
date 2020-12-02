@@ -107,3 +107,8 @@ export const getSavePost = (userID: string) => {
   const _userID = new ObjectId(userID);
   return getSaveUserPost(_userID);
 };
+
+export const editPost = async (postID: string, post: PostModel) => {
+  const _postID = new ObjectId(postID);
+  return Post.update({ _id: _postID }, { $set: post });
+};
