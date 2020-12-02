@@ -11,7 +11,8 @@ import {
   getPostByLikes,
   editPostComment,
   savePost,
-  deleteSavePost
+  deleteSavePost,
+  getSavePost
 } from './controller';
 
 const router = express.Router();
@@ -111,8 +112,14 @@ router.delete('/:postID/save', async (req, res) => {
   }
 });
 
-router.get('/:postID/save', (req, res) => {
-  res.json();
+// No le veo sentido
+router.get('/:postID/save', async (req, res) => {
+  try {
+    const posts = await getSavePost(req.body.userID);
+    res.status(200).json({ data: posts });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
 });
 
 router.put('/:postID', (req, res) => {

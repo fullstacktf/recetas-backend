@@ -6,7 +6,11 @@ import {
   removeCommentByPostId
 } from '../comment/controller';
 import { CommentModel } from '../comment/model/comment';
-import { deleteSaveUserPost, saveUserPost } from '../user/controller';
+import {
+  deleteSaveUserPost,
+  getSaveUserPost,
+  saveUserPost
+} from '../user/controller';
 import { Post, PostModel } from './model/post';
 
 export const getPost = (id: string) => {
@@ -97,4 +101,9 @@ export const deleteSavePost = (postID: string, userID: string) => {
   const _postID = new ObjectId(postID);
   const _userID = new ObjectId(userID);
   return deleteSaveUserPost(_postID, _userID);
+};
+
+export const getSavePost = (userID: string) => {
+  const _userID = new ObjectId(userID);
+  return getSaveUserPost(_userID);
 };
