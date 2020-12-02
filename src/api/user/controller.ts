@@ -170,3 +170,7 @@ export const deleteSaveUserPost = async (
 const checkSaveUserPost = (postID: ObjectId, userID: ObjectId) => {
   return User.find({ _id: userID, saved: postID }, { _id: 1 });
 };
+
+export const getSaveUserPost = (userID: ObjectId) => {
+  return User.find({ _id: userID }, { saved: 1, _id: 0 });
+};
