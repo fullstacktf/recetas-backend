@@ -11,9 +11,9 @@ services:
     networks:
       - backend
 
-  server:
+  backend:
     image: snapfork/snapforkbackend:latest
-    container_name: 'api_backend'
+    container_name: 'app_backend'
     ports:
       - '3000:3000'
     depends_on:
@@ -22,5 +22,5 @@ services:
       - backend
 
 networks:
-  backend:
-    name: app_backend
+  server:
+    name: server
