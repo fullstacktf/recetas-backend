@@ -39,7 +39,7 @@ export const setUserPass = async (
   newPass: string
 ) => {
   const _id = new ObjectId(userID);
-  return User.update(
+  return User.updateOne(
     { _id: _id, password: pass },
     { $set: { password: newPass } }
   );
@@ -50,8 +50,8 @@ export const addFollow = async (id: string, followingUser: string) => {
   const _followingUser = new ObjectId(followingUser);
   const follow = await addFollower(_id, _followingUser);
   const following = await addFollowing(_id, _followingUser);
-  await User.update({ _id: _id }, { $inc: { following: 1 } });
-  await User.update({ _id: _followingUser }, { $inc: { followers: 1 } });
+  await User.updateOne({ _id: _id }, { $inc: { following: 1 } });
+  await User.updateOne({ _id: _followingUser }, { $inc: { followers: 1 } });
   return { follow, following };
 };
 
@@ -60,7 +60,7 @@ const addFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Follower.update(
+  return Follower.updateOne(
     { id_user: _followingUser },
     { $push: { followers: user } }
   );
@@ -74,7 +74,7 @@ const addFollowing = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Following.update(
+  return Following.updateOne(
     { id_user: follower },
     { $push: { following: user } }
   );
@@ -85,8 +85,8 @@ export const removeFollow = async (id: string, followingUser: string) => {
   const _followingUser = new ObjectId(followingUser);
   const follow = await removeFollower(_id, _followingUser);
   const following = await removeFollowing(_id, _followingUser);
-  await User.update({ _id: _id }, { $inc: { following: -1 } });
-  await User.update({ _id: _followingUser }, { $inc: { followers: -1 } });
+  await User.updateOne({ _id: _id }, { $inc: { following: -1 } });
+  await User.updateOne({ _id: _followingUser }, { $inc: { followers: -1 } });
   return { follow, following };
 };
 
@@ -95,7 +95,7 @@ const removeFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Follower.update(
+  return Follower.updateOne(
     { id_user: _followingUser },
     { $pull: { followers: user } }
   );
@@ -112,7 +112,7 @@ const removeFollowing = async (
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Following.update(
+  return Following.updateOne(
     { id_user: follower },
     { $pull: { following: user } }
   );
@@ -134,7 +134,7 @@ const getFollowing = async (_id: ObjectId) => {
 
 export const editUser = (id: string, user: UserModel) => {
   const _id = new ObjectId(id);
-  return User.update(
+  return User.updateOne(
     { _id: _id },
     {
       $set: {
@@ -153,7 +153,7 @@ export const saveUserPost = async (postID: ObjectId, userID: ObjectId) => {
   if (post.length) {
     throw new Error('Este usuario ya tiene guardado el post');
   }
-  return User.update({ _id: userID }, { $push: { saved: postID } });
+  return User.updateOne({ _id: userID }, { $push: { saved: postID } });
 };
 
 export const deleteSaveUserPost = async (
@@ -164,7 +164,7 @@ export const deleteSaveUserPost = async (
   if (!post.length) {
     throw new Error('Este usuario no tiene guardado el post');
   }
-  return User.update({ _id: userID }, { $pull: { saved: postID } });
+  return User.updateOne({ _id: userID }, { $pull: { saved: postID } });
 };
 
 const checkSaveUserPost = (postID: ObjectId, userID: ObjectId) => {
