@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { model, Model, Schema, Document } from 'mongoose';
 
 export type Role = 'admin' | 'user';
@@ -15,6 +16,7 @@ export interface UserModel extends Document {
   publications: number;
   followers: number;
   following: number;
+  saved: [ObjectId];
 }
 
 const UserSchema: Schema = new Schema({
@@ -29,7 +31,8 @@ const UserSchema: Schema = new Schema({
   followers: { type: Number, default: 0 },
   following: { type: Number, default: 0 },
   creation: { type: Date, default: Date.now() },
-  lastLogin: { type: Date, default: Date.now() }
+  lastLogin: { type: Date, default: Date.now() },
+  saved: { type: [Schema.Types.ObjectId], default: [] }
 });
 
 export const User: Model<UserModel> = model<UserModel>('user', UserSchema);
