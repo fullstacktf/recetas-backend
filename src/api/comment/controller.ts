@@ -17,12 +17,12 @@ export const removeCommentByPostId = (postID: ObjectId) => {
 };
 
 export const editComment = (commentID: ObjectId, text: string) => {
-  return Comment.update({ _id: commentID }, { $set: { comment: text } });
+  return Comment.updateOne({ _id: commentID }, { $set: { comment: text } });
 };
 
 export const addLike = (id: string) => {
   const _id = new ObjectId(id);
-  return Comment.update({ _id: _id }, { $inc: { likes: 1 } });
+  return Comment.updateOne({ _id: _id }, { $inc: { likes: 1 } });
 };
 
 export const removeLike = async (id: string) => {
@@ -31,7 +31,7 @@ export const removeLike = async (id: string) => {
   if (isZero) {
     throw new Error('No puede haber comentarios con likes negativos');
   }
-  return Comment.update({ _id: _id }, { $inc: { likes: -1 } });
+  return Comment.updateOne({ _id: _id }, { $inc: { likes: -1 } });
 };
 
 const checkLike = async (_id: ObjectId): Promise<boolean> => {
