@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - cd
 
 jobs:
   build_image_and_push:
