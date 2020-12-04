@@ -1,28 +1,26 @@
-version: "3.7"
+version: '3.7'
 services:
-  server:
-    build:
-      context: .
-      dockerfile: "node-12.19.0.dockerfile"
-    container_name: "app_node"
+  db:
+    image: mongo:3.6
+    container_name: mongobd
+    volumes:
+      - ./mongo-data:/data/mongodb
+    restart: always
     ports:
-      - "8080:80"
+      - '27017:27017'
+    networks:
+      - backend
+
+  backend:
+    image: snapfork/snapforkbackend:latest
+    container_name: 'app_backend'
+    ports:
+      - '3000:3000'
     depends_on:
       - db
     networks:
       - backend
 
-  db:
-    image: mongo:3.6
-    container_name: mongoDB:3.6
-    volumes:
-      - ./mongo-data:/data/mongodb
-    restart: always
-    ports:
-      - "27017:27017"
-    networks:
-      - backend
-
 networks:
-  backend:
-    name: app_backend
+  server:
+    name: server
