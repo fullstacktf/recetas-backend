@@ -7,6 +7,7 @@ import commentRouter from './api/comment/';
 const app = express();
 app.use(express.json());
 
+app.use('/static', express.static('/public'));
 
 app.use('/user', userRouter);
 
