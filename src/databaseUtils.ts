@@ -6,9 +6,9 @@ export let database: Db;
 export function connectDatabase(): Promise<Db> {
   // const username = '';
   // const password = '';
-  const host = 'localhost';
+  const host = 'mongodb';
   const port = '27017';
-  const databaseName = 'snapfork-test';
+  const databaseName = 'snapfork';
   return new Promise<Db>((resolve, reject) => {
     const url =
       'mongodb://' /*${username}:${password}@*/ +

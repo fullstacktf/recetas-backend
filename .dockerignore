@@ -1,5 +1,10 @@
-.github/
-docs/
-node_modules/
-.gitignore
+docs
+node_modules
+nodemon.json
+*.yml
+*.dockerfile
+.*
+!.dockerignore
 README.md
+media
+scripts

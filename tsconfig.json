@@ -14,19 +14,9 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "rootDirs": [
-      "src"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "rootDirs": ["src"]
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "media"
-  ]
+  "include": ["src"],
+  "exclude": ["dist", "node_modules", "media", "**/__*__"]
 }
