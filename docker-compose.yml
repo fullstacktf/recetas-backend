@@ -23,6 +23,20 @@ services:
     networks:
       - server
 
+  frontend:
+    image: snapfork/snapforkfrontend:latest
+    container_name: 'app_frontend'
+    volumes:
+      - /etc/nginx/sites-enabled:/etc/nginx/conf.d
+      - /etc/nginx/certs-enabled:/etc/nginx/certs
+      - /var/log/nginx:/var/log/nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+    networks:
+      - server
+
 networks:
   server:
     name: server
