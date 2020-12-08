@@ -2,24 +2,39 @@ version: '3.7'
 services:
   db:
     image: mongo:3.6
-    container_name: mongobd
+    container_name: mongodb
     volumes:
       - ./mongo-data:/data/mongodb
     restart: always
     ports:
       - '27017:27017'
     networks:
-      - backend
+      - server
 
   backend:
     image: snapfork/snapforkbackend:latest
     container_name: 'app_backend'
+    volumes:
+      - /app/snapfork/public:/public
     ports:
       - '3000:3000'
     depends_on:
       - db
     networks:
+      - server
+
+  frontend:
+    image: snapfork/snapforkfrontend:latest
+    container_name: 'app_frontend'
+    volumes:
+      - /app/snapfork/nginx/sites-available:/etc/nginx/conf.d
+      - /app/snapfork/nginx/log:/var/log/nginx
+    ports:
+      - '80:80'
+    depends_on:
       - backend
+    networks:
+      - server
 
 networks:
   server:

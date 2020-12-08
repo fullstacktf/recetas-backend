@@ -8,7 +8,7 @@ export interface CommentModel extends Document {
   };
   comment: string;
   likes: number;
-  postiD: ObjectId;
+  postID: ObjectId;
   replies: [CommentModel];
 }
 
@@ -16,8 +16,11 @@ const CommentSchema: Schema = new Schema({
   user: { type: Schema.Types.Mixed, required: true },
   comment: { type: String, required: true },
   likes: { type: Number, default: 0 },
-  postiD: { type: Schema.Types.ObjectId, required: true },
+  postID: { type: Schema.Types.ObjectId, required: true },
   replies: { type: [Schema.Types.Mixed], default: [] }
 });
 
-export const Comment: Model<CommentModel> = model<CommentModel>('comment', CommentSchema);
+export const Comment: Model<CommentModel> = model<CommentModel>(
+  'comment',
+  CommentSchema
+);
