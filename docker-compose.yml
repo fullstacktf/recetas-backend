@@ -27,9 +27,8 @@ services:
     image: snapfork/snapforkfrontend:latest
     container_name: 'app_frontend'
     volumes:
-      - /etc/nginx/sites-enabled:/etc/nginx/conf.d
-      - /etc/nginx/certs-enabled:/etc/nginx/certs
-      - /var/log/nginx:/var/log/nginx
+      - /app/snapfork/nginx/sites-available:/etc/nginx/conf.d
+      - /app/snapfork/nginx/log:/var/log/nginx
     ports:
       - '80:80'
     depends_on:
