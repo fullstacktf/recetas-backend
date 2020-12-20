@@ -1,18 +1,12 @@
 import mongoose from 'mongoose';
 import { Db } from 'mongodb';
+import { DB } from './config/config';
 
 export let database: Db;
 
 export function connectDatabase(): Promise<Db> {
-  // const username = '';
-  // const password = '';
-  const host = 'mongodb';
-  const port = '27017';
-  const databaseName = 'snapfork';
   return new Promise<Db>((resolve, reject) => {
-    const url =
-      'mongodb://' /*${username}:${password}@*/ +
-      `${host}:${port}/${databaseName}`;
+    const url = `mongodb://${DB.USER}:${DB.PASSWORD}@${DB.URI}`;
     mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -26,7 +20,7 @@ export function connectDatabase(): Promise<Db> {
     });
 
     connection.once('open', function () {
-      console.log('Connection to DB successful');
+      console.log('Connection to DB successfull');
       database = connection.db;
       return resolve(database);
     });

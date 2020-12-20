@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { model, Model, Schema, Document } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 export type Role = 'admin' | 'user';
 
@@ -17,6 +18,7 @@ export interface UserModel extends Document {
   followers: number;
   following: number;
   saved: [ObjectId];
+  comparePassword: (password: string) => Promise<boolean>
 }
 
 const UserSchema: Schema = new Schema({
@@ -34,5 +36,17 @@ const UserSchema: Schema = new Schema({
   lastLogin: { type: Date, default: Date.now() },
   saved: { type: [Schema.Types.ObjectId], default: [] }
 });
+
+UserSchema.pre<UserModel>('save', async function (next) {
+  if(!this.isModified('password')){ return next();}
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+UserSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
+  return await bcrypt.compare(password, this.password);
+};
 
 export const User: Model<UserModel> = model<UserModel>('user', UserSchema);
