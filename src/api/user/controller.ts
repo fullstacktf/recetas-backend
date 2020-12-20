@@ -1,4 +1,3 @@
-import { findSourceMap } from 'module';
 import { ObjectId } from 'mongodb';
 import { createToken } from '../middelwares/auth';
 import { getPostTimeline } from '../post/controller';
