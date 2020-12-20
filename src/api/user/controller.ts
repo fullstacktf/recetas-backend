@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { createToken } from '../middelwares/auth';
 import { getPostTimeline } from '../post/controller';
 import { Follower } from './model/follower';
 import { Following } from './model/following';
@@ -14,6 +15,17 @@ export const getUserById = (id: string) => {
     { _id: _id },
     { _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 }
   );
+};
+
+export const loginUser = async (user: UserModel)=> {
+  const findUser = await User.findOne({username: user.username});
+  if(findUser){
+    const checkPassword = await findUser.comparePassword(user.password);
+    if(checkPassword){
+      return Promise.resolve(createToken(findUser));
+    }
+  }
+  return Promise.reject('Credeciales invalidas');
 };
 
 export const createUser = async (user: UserModel) => {

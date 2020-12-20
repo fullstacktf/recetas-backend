@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 import {
   getPost,
   getPostByTag,
@@ -46,6 +47,7 @@ router.get('/tag/:tagID', async (req, res) => {
 });
 
 // middleware USUARIOS LOGUEADOS
+router.use(passport.authenticate('jwt', {session: false}));
 
 router.post('/:postID/like', async (req, res) => {
   try {

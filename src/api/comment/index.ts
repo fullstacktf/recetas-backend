@@ -1,9 +1,11 @@
 import express from 'express';
+import passport from 'passport';
 import { addLike, removeLike } from './controller';
 
 const router = express.Router();
 
 // middleware USUARIOS LOGUEADOS
+router.use(passport.authenticate('jwt', {session: false}));
 
 router.post('/:commentID/like', async (req, res) => {
   try {

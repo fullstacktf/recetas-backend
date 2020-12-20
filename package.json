@@ -1,6 +1,6 @@
 {
   "name": "snapfork-backend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -14,9 +14,17 @@
   },
   "homepage": "https://github.com/fullstacktf/recetas-backend#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   },
   "scripts": {
     "build": "tsc",
@@ -32,11 +40,17 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
     "@cowcoders/eslint-config": "^1.1.1",
+    "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.9",
     "@types/express": "^4.17.9",
     "@types/jest": "^26.0.14",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/mongodb": "^3.5.33",
     "@types/mongoose": "^5.10.1",
+    "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.8",
+    "@types/passport": "^1.0.4",
+    "@types/passport-jwt": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "eslint": "^7.13.0",
