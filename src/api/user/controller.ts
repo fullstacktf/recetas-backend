@@ -1,3 +1,4 @@
+import { findSourceMap } from 'module';
 import { ObjectId } from 'mongodb';
 import { createToken } from '../middelwares/auth';
 import { getPostTimeline } from '../post/controller';
@@ -22,7 +23,22 @@ export const loginUser = async (user: UserModel)=> {
   if(findUser){
     const checkPassword = await findUser.comparePassword(user.password);
     if(checkPassword){
-      return Promise.resolve(createToken(findUser));
+      const token = createToken(findUser);
+      let data: any = {
+        id: findUser._id,
+        username: findUser.username,
+        email: findUser.email,
+        name: findUser.name,
+        last: findUser.last,
+        rol: findUser.rol,
+        description: findUser.description,
+        publications: findUser.publications,
+        followers: findUser.followers,
+        following: findUser.following,
+        saved: findUser.saved,
+        token
+      };
+      return Promise.resolve(data);
     }
   }
   return Promise.reject('Credeciales invalidas');
