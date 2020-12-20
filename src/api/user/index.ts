@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 import {
   addFollow,
   createUser,
@@ -6,20 +7,26 @@ import {
   getTimeline,
   getUserById,
   getUsers,
+  loginUser,
   removeFollow,
   setUserPass
 } from './controller';
 
 const router = express.Router();
 
-router.post('/login', (req, res) => {
-  res.json({});
+router.post('/login', async (req, res) => {
+  try {
+    const token = await loginUser(req.body);
+    res.status(200).json({ data: token });
+  } catch (error) {
+    res.status(400).json({ error: String(error) });
+  }
 });
 
 router.post('/register', async (req, res) => {
   try {
     const user = await createUser(req.body);
-    res.status(200).json({ data: user });
+    res.status(201).json({ data: user });
   } catch (error) {
     res.status(400).json({ error: String(error) });
   }
@@ -35,6 +42,7 @@ router.get('/:userID/profile', async (req, res) => {
 });
 
 // middleware USUARIOS LOGUEADOS
+router.use(passport.authenticate('jwt', {session: false}));
 
 router.put('/password/reset', async (req, res) => {
   try {

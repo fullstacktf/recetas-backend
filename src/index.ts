@@ -3,9 +3,22 @@ import { connectDatabase } from './databaseUtils';
 import userRouter from './api/user/';
 import postRouter from './api/post/';
 import commentRouter from './api/comment/';
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import passport from 'passport';
+import { jwtStrategy } from './api/middelwares/auth';
 
+dotenv.config();
 const app = express();
+
+app.set('port', process.env.PORT || 3000);
+
+app.use(morgan('dev'));
+app.use(cors());
 app.use(express.json());
+app.use(passport.initialize());
+passport.use(jwtStrategy);
 
 app.use('/static', express.static('/public'));
 
