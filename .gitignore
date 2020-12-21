@@ -23,3 +23,6 @@ mongo-data/
 
 #Scripts
 scripts/
+
+#ENV File
+.env
