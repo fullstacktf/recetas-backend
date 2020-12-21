@@ -25,7 +25,15 @@ export const getUserByUsername = (username: string) => {
 };
 
 export const loginUser = async (user: UserModel)=> {
-  const findUser = await User.findOne({username: user.username});
+  let findUser;
+  if(user.username){
+    findUser = await User.findOne({username: user.username});
+  }else if(user.email){
+    findUser = await User.findOne({email: user.email});
+  }else{
+    return Promise.reject('Invalid request params');
+  }
+
   if(findUser){
     const checkPassword = await findUser.comparePassword(user.password);
     if(checkPassword){
