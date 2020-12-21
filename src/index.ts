@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
 
 connectDatabase()
   .then(() => {
-    app.listen(3000, () => console.log('Listen on port 3000'));
+    app.listen(app.get('port'), () => console.log(`Listen on port ${app.get('port')}`));
   })
   .catch((error) => {
     console.error('Algo ha fallado', error);
