@@ -18,6 +18,7 @@ services:
       - .env
     volumes:
       - /app/snapfork/public:/public
+      - /app/snapfork/API/log:/API/log
     expose:
       - '3000'
     depends_on:
