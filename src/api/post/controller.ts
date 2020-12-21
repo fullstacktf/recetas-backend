@@ -18,6 +18,10 @@ export const getPost = (id: string) => {
   return Post.findById({ _id }, { __v: 0 });
 };
 
+export const getPostByName = (postName: string) => {
+  return Post.find({ name: { $regex: '.*' + postName + '.*', $options: 'i'}}, { __v: 0 }).limit(10);
+};
+
 export const getPostByTag = (tag: string) => {
   return Post.find({ tags: tag }, { __v: 0 });
 };
@@ -65,7 +69,8 @@ export const removePostComment = async (id: string, commentID: string) => {
 };
 
 export const createPost = async (post: PostModel) => {
-  post.owner._id = new ObjectId(post.owner._id);
+  post.owner = {_id: new ObjectId('5fb93e6365efa558ab4fd383'), username: 'izm20'};
+  // post.owner._id = new ObjectId(post.owner._id);
   const newPost = new Post(post);
   return newPost.save();
 };

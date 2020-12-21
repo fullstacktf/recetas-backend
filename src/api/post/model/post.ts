@@ -1,17 +1,17 @@
 import { ObjectId } from 'mongodb';
 import { model, Model, Schema, Document } from 'mongoose';
-import { IngredientModel } from './ingredient';
+// import { IngredientModel } from './ingredient';
 
 export interface PostModel extends Document {
   owner: {
     _id: ObjectId;
     username: string;
   };
-  name: string;
+  title: string;
   description: string;
-  time: number;
+  time: string;
   servings: number;
-  ingredients: [IngredientModel];
+  ingredients: [string];
   steps: [string];
   creation: Date;
   likes: number;
@@ -21,11 +21,11 @@ export interface PostModel extends Document {
 
 const PostSchema: Schema = new Schema({
   owner: { type: Schema.Types.Mixed, required: true },
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   description: { type: String, required: true },
-  time: { type: Number, required: true },
+  time: { type: String, required: true },
   servings: { type: Number, required: true },
-  ingredients: { type: [Schema.Types.Mixed], required: true },
+  ingredients: { type: [String], required: true },
   steps: { type: [String], required: true },
   creation: { type: Date, default: Date.now() },
   likes: { type: Number, default: 0 },

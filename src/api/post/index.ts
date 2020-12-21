@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import { UploadedFile } from 'express-fileupload';
 import {
   getPost,
   getPostByTag,
@@ -14,7 +15,8 @@ import {
   savePost,
   deleteSavePost,
   getSavePost,
-  editPost
+  editPost,
+  getPostByName
 } from './controller';
 
 const router = express.Router();
@@ -23,6 +25,15 @@ router.get('/public/popular', async (req, res) => {
   try {
     const posts = await getPostByLikes();
     res.status(200).json({ data: posts });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+router.get('/search/:postName', async (req, res) => {
+  try {
+    const post = await getPostByName(req.params.postName);
+    res.status(200).json({ data: post });
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
@@ -138,6 +149,18 @@ router.delete('/:postID', async (req, res) => {
   try {
     const post = await removePost(req.params.postID);
     res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+router.post('/upload-image', async (req, res) => {
+  try {
+    console.log(req.files);
+    const image = req.files?.image as UploadedFile;
+    image?.mv('/tmp/' + image?.name);
+    // const post = await createPost(req.body);
+    res.status(200).json({ data: 'post' });
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
