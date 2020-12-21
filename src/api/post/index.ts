@@ -16,7 +16,8 @@ import {
   deleteSavePost,
   getSavePost,
   editPost,
-  getPostByName
+  getPostByName,
+  uploadImage
 } from './controller';
 
 const router = express.Router();
@@ -58,7 +59,7 @@ router.get('/tag/:tagID', async (req, res) => {
 });
 
 // middleware USUARIOS LOGUEADOS
-router.use(passport.authenticate('jwt', {session: false}));
+router.use(passport.authenticate('jwt', { session: false }));
 
 router.post('/:postID/like', async (req, res) => {
   try {
@@ -156,11 +157,16 @@ router.delete('/:postID', async (req, res) => {
 
 router.post('/upload-image', async (req, res) => {
   try {
-    console.log(req.files);
-    const image = req.files?.image as UploadedFile;
-    image?.mv('/tmp/' + image?.name);
-    // const post = await createPost(req.body);
-    res.status(200).json({ data: 'post' });
+    if (req.files) {
+      if (req.files.image) {
+        const result = await uploadImage(
+          req.files.image as UploadedFile,
+          req.body.userID,
+          req.body.postID
+        );
+        res.status(200).json({ data: result });
+      }
+    }
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
