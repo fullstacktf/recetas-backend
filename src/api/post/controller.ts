@@ -16,6 +16,8 @@ import {
 } from '../user/controller';
 import { Post, PostModel } from './model/post';
 
+const PATH = '/app/snapfork/public/users';
+
 export const getPost = (id: string) => {
   const _id = new ObjectId(id);
   return Post.findById({ _id }, { __v: 0 });
@@ -135,7 +137,7 @@ export const uploadImage = async (
   if (!userID) {
     return Promise.reject('No userID');
   }
-  let path = `/tmp/users/${userID}`;
+  let path = `${PATH}/${userID}`;
   let name = userID;
   createDir(path);
   if (postID) {
