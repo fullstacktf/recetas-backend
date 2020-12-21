@@ -14,7 +14,7 @@ const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
@@ -34,7 +34,7 @@ app.get('/', async (req, res) => {
 
 connectDatabase()
   .then(() => {
-    app.listen(3000, () => console.log('Listen on port 3000'));
+    app.listen(app.get('port'), () => console.log(`Listen on port ${app.get('port')}`));
   })
   .catch((error) => {
     console.error('Algo ha fallado', error);
