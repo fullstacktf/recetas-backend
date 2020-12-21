@@ -18,11 +18,34 @@ export const getUserById = (id: string) => {
 };
 
 export const loginUser = async (user: UserModel)=> {
-  const findUser = await User.findOne({username: user.username});
+  let findUser;
+  if(user.username){
+    findUser = await User.findOne({username: user.username});
+  }else if(user.email){
+    findUser = await User.findOne({email: user.email});
+  }else{
+    return Promise.reject('Invalid request params');
+  }
+
   if(findUser){
     const checkPassword = await findUser.comparePassword(user.password);
     if(checkPassword){
-      return Promise.resolve(createToken(findUser));
+      const token = createToken(findUser);
+      let data: any = {
+        id: findUser._id,
+        username: findUser.username,
+        email: findUser.email,
+        name: findUser.name,
+        last: findUser.last,
+        rol: findUser.rol,
+        description: findUser.description,
+        publications: findUser.publications,
+        followers: findUser.followers,
+        following: findUser.following,
+        saved: findUser.saved,
+        token
+      };
+      return Promise.resolve(data);
     }
   }
   return Promise.reject('Credeciales invalidas');
@@ -34,7 +57,8 @@ export const createUser = async (user: UserModel) => {
     return Promise.reject('Username o email ya existe');
   }
   const userToCreate = new User({ ...user });
-  return userToCreate.save();
+  const createdUser = userToCreate.save();
+  return createdUser ? true : false;
 };
 
 const checkUsernameEmail = async (username: string, email: string) => {
