@@ -8,13 +8,17 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import { jwtStrategy } from './api/middelwares/auth';
+import fs from 'fs';
 
 dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(morgan('dev'));
+app.use(morgan('combined'));
+app.use(morgan('combined', {
+    stream: fs.createWriteStream('/API/log/request.log', {flags: 'a'})
+}));
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
