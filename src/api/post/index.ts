@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import { UploadedFile } from 'express-fileupload';
 import {
   getPost,
   getPostByTag,
@@ -14,7 +15,9 @@ import {
   savePost,
   deleteSavePost,
   getSavePost,
-  editPost
+  editPost,
+  getPostByName,
+  uploadImage
 } from './controller';
 
 const router = express.Router();
@@ -23,6 +26,15 @@ router.get('/public/popular', async (req, res) => {
   try {
     const posts = await getPostByLikes();
     res.status(200).json({ data: posts });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+router.get('/search/:postName', async (req, res) => {
+  try {
+    const post = await getPostByName(req.params.postName);
+    res.status(200).json({ data: post });
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
@@ -47,7 +59,7 @@ router.get('/tag/:tagID', async (req, res) => {
 });
 
 // middleware USUARIOS LOGUEADOS
-router.use(passport.authenticate('jwt', {session: false}));
+router.use(passport.authenticate('jwt', { session: false }));
 
 router.post('/:postID/like', async (req, res) => {
   try {
@@ -138,6 +150,23 @@ router.delete('/:postID', async (req, res) => {
   try {
     const post = await removePost(req.params.postID);
     res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+router.post('/upload-image', async (req, res) => {
+  try {
+    if (req.files) {
+      if (req.files.image) {
+        const result = await uploadImage(
+          req.files.image as UploadedFile,
+          req.body.userID,
+          req.body.postID
+        );
+        res.status(200).json({ data: result });
+      }
+    }
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }

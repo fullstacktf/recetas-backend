@@ -1,4 +1,7 @@
+import Jimp from 'jimp';
+import fs from 'fs';
 import { ObjectId } from 'mongodb';
+import { UploadedFile } from '../..';
 import {
   createComment,
   editComment,
@@ -13,9 +16,18 @@ import {
 } from '../user/controller';
 import { Post, PostModel } from './model/post';
 
+const PATH = '/app/snapfork/public/users';
+
 export const getPost = (id: string) => {
   const _id = new ObjectId(id);
   return Post.findById({ _id }, { __v: 0 });
+};
+
+export const getPostByName = (postName: string) => {
+  return Post.find(
+    { name: { $regex: '.*' + postName + '.*', $options: 'i' } },
+    { __v: 0 }
+  ).limit(10);
 };
 
 export const getPostByTag = (tag: string) => {
@@ -65,7 +77,11 @@ export const removePostComment = async (id: string, commentID: string) => {
 };
 
 export const createPost = async (post: PostModel) => {
-  post.owner._id = new ObjectId(post.owner._id);
+  post.owner = {
+    _id: new ObjectId('5fb93e6365efa558ab4fd383'),
+    username: 'izm20'
+  };
+  // post.owner._id = new ObjectId(post.owner._id);
   const newPost = new Post(post);
   return newPost.save();
 };
@@ -111,4 +127,50 @@ export const getSavePost = (userID: string) => {
 export const editPost = async (postID: string, post: PostModel) => {
   const _postID = new ObjectId(postID);
   return Post.updateOne({ _id: _postID }, { $set: post });
+};
+
+export const uploadImage = async (
+  image: UploadedFile,
+  userID: string,
+  postID: string
+) => {
+  if (!userID) {
+    return Promise.reject('No userID');
+  }
+  let path = `${PATH}/${userID}`;
+  let name = userID;
+  createDir(path);
+  if (postID) {
+    path += `/${postID}`;
+    createDir(path);
+    name = postID;
+  }
+  const rawImagePath = `${path}/${image.name}`;
+  await saveImage(image, rawImagePath);
+  jpgConverter(path, rawImagePath, name);
+  removeImage(rawImagePath);
+  return Promise.resolve('Image uploaded');
+};
+
+const jpgConverter = (path: string, rawImagePath: string, name: string) => {
+  return Jimp.read(rawImagePath, (err, image) => {
+    if (err) {
+      throw err;
+    }
+    image.quality(60).write(`${path}/${name}.jpg`);
+  });
+};
+
+const saveImage = async (image: UploadedFile, path: string) => {
+  return image.mv(path);
+};
+
+const removeImage = async (path: string) => {
+  return fs.unlinkSync(path);
+};
+
+const createDir = (path: string) => {
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path);
+  }
 };

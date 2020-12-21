@@ -6,6 +6,7 @@ import {
   editUser,
   getTimeline,
   getUserById,
+  getUserByUsername,
   getUsers,
   loginUser,
   removeFollow,
@@ -42,6 +43,15 @@ router.get('/:userID/profile', async (req, res) => {
     res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ msg: String(error) });
+  }
+});
+
+router.get('/search/:username', async (req, res) => {
+  try {
+    const user = await getUserByUsername(req.params.username);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
   }
 });
 
