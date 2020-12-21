@@ -49,7 +49,8 @@ export const createUser = async (user: UserModel) => {
     return Promise.reject('Username o email ya existe');
   }
   const userToCreate = new User({ ...user });
-  return userToCreate.save();
+  const createdUser = userToCreate.save();
+  return createdUser ? true : false;
 };
 
 const checkUsernameEmail = async (username: string, email: string) => {
