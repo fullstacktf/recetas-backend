@@ -145,7 +145,7 @@ export const uploadImage = async (
   let name = userID;
   createDir(path);
   if (postID) {
-    path += `/${postID}`;
+    path += `/posts/${postID}`;
     createDir(path);
     name = postID;
   }
