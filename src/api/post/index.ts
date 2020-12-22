@@ -137,8 +137,7 @@ router.delete('/:postID/save', async (req, res) => {
   }
 });
 
-// No le veo sentido
-router.get('/:postID/save', async (req, res) => {
+router.get('/:postID/saved', async (req, res) => {
   try {
     const posts = await getSavePost(req.body.userID);
     res.status(200).json({ data: posts });
