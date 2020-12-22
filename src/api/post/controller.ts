@@ -12,6 +12,7 @@ import { CommentModel } from '../comment/model/comment';
 import {
   deleteSaveUserPost,
   getSaveUserPost,
+  incrementUserPost,
   saveUserPost
 } from '../user/controller';
 import { Post, PostModel } from './model/post';
@@ -87,6 +88,7 @@ export const removePostComment = async (id: string, commentID: string) => {
 export const createPost = async (post: PostModel) => {
   post.owner._id = new ObjectId(post.owner._id);
   const newPost = new Post(post);
+  await incrementUserPost(post.owner._id);
   return newPost.save();
 };
 
