@@ -166,8 +166,6 @@ router.delete('/:postID', async (req, res) => {
 });
 
 router.post('/upload-image', async (req, res) => {
-  console.log('FILE UPLOAD REQUEST BODY', req.body);
-  console.log('FILE UPLOAD REQUEST FILES', req.files);
   try {
     if (req.files && req.files.image) {
         const result = await uploadImage(
