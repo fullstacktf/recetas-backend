@@ -16,7 +16,7 @@ import {
 } from '../user/controller';
 import { Post, PostModel } from './model/post';
 
-const PATH = '/app/snapfork/public/users';
+const PATH = '/public/users';
 
 export const getPost = (id: string) => {
   const _id = new ObjectId(id);
