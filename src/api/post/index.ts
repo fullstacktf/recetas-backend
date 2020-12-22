@@ -17,7 +17,8 @@ import {
   getSavePost,
   editPost,
   getPostByName,
-  uploadImage
+  uploadImage,
+  getUserPosts
 } from './controller';
 
 const router = express.Router();
@@ -55,6 +56,15 @@ router.get('/tag/:tagID', async (req, res) => {
     res.status(200).json({ data: posts });
   } catch (error) {
     res.status(500).json({ error: String(error) });
+  }
+});
+
+router.get('/user/:userID', async (req, res) => {
+  try {
+    const user = await getUserPosts(req.params.userID);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ msg: String(error) });
   }
 });
 

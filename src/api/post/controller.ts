@@ -30,6 +30,14 @@ export const getPostByName = (postName: string) => {
   ).limit(10);
 };
 
+export const getUserPosts = (id: string) => {
+  const _id = new ObjectId(id);
+  return Post.find(
+    { 'owner._id': _id },
+    { _v: 0, creation: 0}
+  );
+};
+
 export const getPostByTag = (tag: string) => {
   return Post.find({ tags: tag }, { __v: 0 });
 };
