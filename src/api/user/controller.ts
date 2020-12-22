@@ -223,3 +223,11 @@ const checkSaveUserPost = (postID: ObjectId, userID: ObjectId) => {
 export const getSaveUserPost = (userID: ObjectId) => {
   return User.find({ _id: userID }, { saved: 1, _id: 0 });
 };
+
+export const incrementUserPost = async (id: ObjectId) => {
+  return User.updateOne({ _id: id }, { $inc: { publications: 1 } });
+};
+
+export const decrementUserPost = async (id: ObjectId) => {
+  return User.updateOne({ _id: id }, { $inc: { publications: -1 } });
+};
