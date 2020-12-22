@@ -164,7 +164,10 @@ const removeFollowing = async (
 export const getTimeline = async (id: string) => {
   const _id = new ObjectId(id);
   const following = await getFollowing(_id);
-  return getPostTimeline(following);
+  if(following && following.length > 0){
+    return getPostTimeline(following);
+  }
+  return [];
 };
 
 const getFollowing = async (_id: ObjectId) => {
@@ -172,7 +175,10 @@ const getFollowing = async (_id: ObjectId) => {
     { id_user: _id },
     { following: 1, _id: 0 }
   );
-  return following[0].following.map((elem) => elem._id);
+  if(following && following.length > 0){
+    return following[0].following.map((elem) => elem._id);
+  }
+  return [];
 };
 
 export const editUser = (id: string, user: UserModel) => {

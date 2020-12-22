@@ -157,16 +157,15 @@ router.delete('/:postID', async (req, res) => {
 
 router.post('/upload-image', async (req, res) => {
   try {
-    if (req.files) {
-      if (req.files.image) {
+    if (req.files && req.files.image) {
         const result = await uploadImage(
           req.files.image as UploadedFile,
           req.body.userID,
           req.body.postID
         );
         res.status(200).json({ data: result });
-      }
     }
+    res.status(400).json({ msg: 'Bad request' });
   } catch (error) {
     res.status(500).json({ error: String(error) });
   }
