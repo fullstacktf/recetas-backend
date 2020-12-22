@@ -17,6 +17,13 @@ export const getUserById = (id: string) => {
   );
 };
 
+export const getUserByUsername = (username: string) => {
+  return User.find(
+    { username: { $regex: '.*' + username + '.*', $options: 'i'}},
+    { _v: 0, password: 0, creation: 0, lastLogin: 0, rol: 0 }
+  ).limit(10);
+};
+
 export const loginUser = async (user: UserModel)=> {
   let findUser;
   if(user.username){
