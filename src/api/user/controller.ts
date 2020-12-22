@@ -39,7 +39,7 @@ export const loginUser = async (user: UserModel)=> {
     if(checkPassword){
       const token = createToken(findUser);
       let data: any = {
-        id: findUser._id,
+        _id: findUser._id,
         username: findUser.username,
         email: findUser.email,
         name: findUser.name,
