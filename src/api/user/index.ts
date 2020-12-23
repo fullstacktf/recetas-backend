@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import passport from 'passport';
 import {
   addFollow,
@@ -8,6 +9,7 @@ import {
   getUserById,
   getUserByUsername,
   getUsers,
+  isFollowing,
   loginUser,
   removeFollow,
   setUserPass
@@ -80,6 +82,15 @@ router.put('/:userID/profile', async (req, res) => {
   try {
     const user = await editUser(req.params.userID, req.body);
     res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ msg: String(error) });
+  }
+});
+
+router.get('/:userID/isFollowing/:userID2', async (req, res) => {
+  try {
+    const result = await isFollowing(new ObjectId(req.params.userID), new ObjectId(req.params.userID2));
+    res.status(200).json({ data: result });
   } catch (error) {
     res.status(500).json({ msg: String(error) });
   }

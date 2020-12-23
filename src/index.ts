@@ -16,12 +16,12 @@ export type UploadedFile = fileUpload.UploadedFile;
 
 const app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 app.use(morgan('combined'));
-app.use(morgan('combined', {
+/*app.use(morgan('combined', {
     stream: fs.createWriteStream('/API/log/request.log', {flags: 'a'})
-}));
+}));*/
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
