@@ -98,7 +98,7 @@ router.get('/:userID/isFollowing/:userID2', async (req, res) => {
 
 router.post('/:userID/follow', async (req, res) => {
   try {
-    const user = await addFollow(req.body.id, req.params.userID);
+    const user = await addFollow(new ObjectId(req.body.id), new ObjectId(req.params.userID));
     res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ msg: String(error) });

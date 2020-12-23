@@ -64,7 +64,9 @@ export const createUser = async (user: UserModel) => {
     return Promise.reject('Username o email ya existe');
   }
   const userToCreate = new User({ ...user });
-  const createdUser = userToCreate.save();
+  const createdUser = await userToCreate.save();
+  new Follower({id_user: createdUser._id, followers: [] }).save();
+  new Following({id_user: createdUser._id, followers: [] }).save();
   return createdUser ? true : false;
 };
 
@@ -88,13 +90,11 @@ export const setUserPass = async (
   );
 };
 
-export const addFollow = async (id: string, followingUser: string) => {
-  const _id = new ObjectId(id);
-  const _followingUser = new ObjectId(followingUser);
-  const follow = await addFollower(_id, _followingUser);
-  const following = await addFollowing(_id, _followingUser);
-  await User.updateOne({ _id: _id }, { $inc: { following: 1 } });
-  await User.updateOne({ _id: _followingUser }, { $inc: { followers: 1 } });
+export const addFollow = async (id: ObjectId, followingUser: ObjectId) => {
+  const follow = await addFollower(id, followingUser);
+  const following = await addFollowing(id, followingUser);
+  await User.updateOne({ _id: id }, { $inc: { following: 1 } });
+  await User.updateOne({ _id: followingUser }, { $inc: { followers: 1 } });
   return { follow, following };
 };
 
@@ -103,7 +103,7 @@ const addFollower = async (follower: ObjectId, _followingUser: ObjectId) => {
   if (!user) {
     throw new Error('Usuario no existe');
   }
-  return Follower.updateOne(
+  return Follower.update(
     { id_user: _followingUser },
     { $push: { followers: user } }
   );
