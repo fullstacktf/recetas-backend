@@ -106,9 +106,9 @@ export const getPostByLikes = () => {
   return Post.find({}, { __v: 0 }).sort({ likes: -1 }).limit(15);
 };
 
-export const getPostTimeline = (following: ObjectId[]) => {
+export const getPostTimeline = (following: {_id: ObjectId, username: string }[]) => {
   // TODO: Poner limit
-  return Post.find({ 'owner._id': following }, { __v: 0 }).sort({
+  return Post.find({ 'owner._id': following.map(elem => elem._id) }, { __v: 0 }).sort({
     creation: -1
   });
 };

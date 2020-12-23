@@ -170,15 +170,25 @@ export const getTimeline = async (id: string) => {
   return [];
 };
 
-const getFollowing = async (_id: ObjectId) => {
+export const getFollowing = async (_id: ObjectId) => {
   const following = await Following.find(
     { id_user: _id },
     { following: 1, _id: 0 }
   );
   if(following && following.length > 0){
-    return following[0].following.map((elem) => elem._id);
+    return following[0].following.map((elem) => elem);
   }
   return [];
+};
+
+export const isFollowing = async (idUser: ObjectId, idFollowing: ObjectId) => {
+  const following = await Following.findOne(
+    { id_user: idUser, 'following._id': idFollowing }
+  );
+  if(following){
+    return true;
+  }
+  return false;
 };
 
 export const editUser = (id: string, user: UserModel) => {
